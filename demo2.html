@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+            body {
+                font-family: "微软雅黑";
+                font-size: 14px;
+            }
+            
+            input {
+                font-size: 14px;
+            }
+            
+            body,ul,div,html {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .main {
+                width: 800px;
+                margin: 0 auto;
+            }
+            
+            li {
+                list-style-type: none;
+                line-height: 40px;
+                position: relative;
+                border: 1px solid #ccc;
+                padding: 0 20px;
+            }
+            
+            li .close {
+                position: absolute;
+                color: #f00;
+                font-size: 20px;
+                line-height: 40px;
+                height: 40px;
+                right: 20px;
+                cursor: pointer;
+                display: none;
+                top: 0;
+
+            }
+            
+            li:hover {
+                border: 1px solid #09f;
+            }
+            
+            li:hover .close {
+                display: block;
+            }
+            
+            .text1 {
+                box-sizing: border-box;
+                width: 100%;
+                height: 40px;
+                padding-left: 10px;
+                outline: none;
+            }
+            .finished{
+            	text-decoration: line-through;
+            	color: red;
+            }
+            li .selectBefore{
+            	display: block;
+            	width: 10px;
+            	height: 10px;
+            	background: #ccc; 
+            	margin: 14px 10px 0 0 ;
+            	float: left;          	
+            }
+
+            li.selectAfter .selectBefore{
+            	background-color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" class="main">
+            <h2>添加小目标</h2>
+            <div>               
+                <input type="text" class="text1" placeholder="输入小目标后，按回车确认" @keyup.13='addList' v-model="addText" />
+            </div>
+            <ul>
+                <li v-for="(list1,index) in list" v-bind:class="{finished:list1.done,selectAfter:list1.done}">
+                   <div>
+                   		<span class="selectBefore"  v-on:click="isFinished(list1)" ></span>
+                        <span v-on:click="isFinished(list1)">{{list1.name}}</span>
+                        <!--把索引当参数，传进函数-->
+                        <span class="close" @click='delectList(index)'>X</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </body>
+  
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        var list = [
+            { name: "HTML5",done:false},
+            { name: "CSS3",done:false},
+            { name: "vue",done:false},
+            { name: "angular",done:false}
+        ];
+        new Vue({
+            el: "#app",
+            data: {
+                list:list,
+                addText: ""
+            },
+            methods: {
+                addList() {
+                    //添加元素
+                    this.list.push({
+                        name: this.addText,
+                        done:false
+                    });
+                    this.addText = "";
+                },
+                delectList(index) {
+                    //根据索引，删除数组的一个元素
+                    this.list.splice(index, 1);
+                },
+                isFinished(item){
+                	item.done=!item.done;
+                }
+
+            }
+        });
+    </script>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo3</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			font-size: 14px;
+			font-family: '微软雅黑';
+		}
+		
+		input{
+			font-size: 14px;
+		}
+		h1{
+			margin:20px 0;
+		}
+		.main{
+			width: 800px;
+			/*border: 1px solid #000;*/
+			margin: 0 auto;
+		}
+		.text1{
+			width: 100%;
+			height: 40px;
+			line-height: 40px;
+			line-height: 40px;
+			outline: none;
+			padding-left: 15px;
+			box-sizing: border-box;
+		}
+		li{
+			list-style-type: none;
+			height: 40px;
+			line-height: 40px;
+			padding-left: 15px;
+			position: relative;
+			border:1px solid #ccc;
+		}
+		li .close{
+			position: absolute;
+			right: 20px;
+			top:0;
+			color: red;
+			cursor: pointer;
+			display: none;
+		
+		}
+		li:hover{
+			 border: 1px solid #09f;
+		}
+        li:hover .close {
+            display: block;
+        }
+	</style>
+</head>
+<body>
+<div id="app" class="main">
+	<h1>添加小目标</h1>
+	 <input type="text" class="text1" placeholder="输入小目标后，按回车确认" @keyup.13='addList' v-model="addText" />
+	<ul>
+        <li v-for="(list1,index) in list" >
+	        
+	        <span>{{list1.title}}</span>
+	        <span class="close" @click='deleteList(index)'>X</span>
+	       
+        </li>
+	</ul>
+</div>
+</body>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+	var list=[
+	{title:"jquery"},
+	{title:"javascipt"},
+	{title:"html5"},
+	{title:"vue"}
+	];
+
+	new Vue({
+		el:"#app",
+		data:{
+			list:list,
+			addText:""
+		},
+		methods:{
+  			addList(){
+  				//push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
+  				this.list.push({
+  					title:this.addText
+  				});
+  				this.addText="";
+  			},
+  			deleteList(index){
+  				//splice() 方法用于插入、删除或替换数组的元素。
+  				this.list.splice(index,1);
+  			}
+
+		}
+
+
+	});
+</script>
+</html>
