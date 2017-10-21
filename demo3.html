@@ -105,7 +105,7 @@
 
     <script src="node_modules/vue/dist/vue.js"></script>
     <script type="text/javascript">
-        var list = [
+        var lists = [
             { name: "HTML5",done:false},
             { name: "CSS3",done:false},
             { name: "vue",done:false},
@@ -114,9 +114,9 @@
         new Vue({
             el: "#app",
             data: {
-            	AddText:list,
-                list:list,
-                useList:list,
+            	
+                list:lists,
+                useList:lists,
                 addText: "",
                 dian:"one",
                 filter: 1
@@ -124,12 +124,17 @@
             methods: {
                 addList() {
                     //添加元素
-                    this.list.push({
+                    if(this.addText===""){
+                    	return
+                    }else{
+                    	this.list.push({
                         name: this.addText,
                         done:false
                     });
                     this.addText = "";
                     this.check(this.filter);
+                    }
+                    
                 },
                 delectList(index) {
                     //根据索引，删除数组的一个元素
